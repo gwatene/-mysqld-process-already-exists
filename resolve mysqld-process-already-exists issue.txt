@@ -1,0 +1,29 @@
+This error occurs basically when some one try to reset his MySQL password and any mysqld process is still running. Some days before one of my client ask me that he is getting problem to reset his MySQL password. He told me that he is getting some error "mysqld_safe A mysqld process already exists". I asked him to run few commands and then try to change. those command worked for him, and i am assured that it will work for all others users who are facing this error.
+
+Before we start i will let you know the circumstances in which this error occurs.
+1). When you are trying to recreate your root account again.
+2). Change password for root user in mysql.
+3). Any other.
+
+
+How to overcome this problem ?
+Well, it is clearly mentioned in the error that any mysqld process is still running and due to which you can cannot perform password change command for root user. So, we have to kill all mysqld process before running "mysqld_safe" command.
+
+To kill all mysqld process :
+----
+# killall mysqld mysqld_safe
+----
+Wait for 10 seconds atleast so that it shut down cleanly.
+
+Now, run this command to check whether still there are some mysqld process remained or not ?
+----
+# ps aux | grep mysqld
+----
+
+If you still able to see more than run this command :
+----
+killall -9 mysqld mysqld_safe
+----
+This will kill all mysqld processes.
+
+Now, you can perform your mysqld_safe command.
